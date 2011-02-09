@@ -1,0 +1,18 @@
+body {
+	-webkit-perspective: 1000px;
+}
+
+.item {
+	position: absolute;
+	width: 300px;
+	height: 300px;
+	margin: 0 auto;
+	background-color: #333;
+	opacity: 0.3;
+	-webkit-transform-origin: center center 0;
+	-webkit-transition-property: -webkit-transform opacity;
+	-webkit-transition-duration: 1s;
+}
+
+.item.hover { opacity: 0.6; }
+.item.selected { opacity: 0.9; }

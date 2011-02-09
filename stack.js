@@ -6,7 +6,7 @@ var DEFAULT_MARGIN_TOP = 50,
 	DEFAULT_X_ROTATION = 80,
 	DEFAULT_Z_ROTATION = 45;
 
-function setPosition() {
+function setPosition(notAnimated) {
 	var $items = $('.item'),
 		somethingSelected = $items.hasClass('selected'),
 		spacing = ($(document).height() - DEFAULT_MARGIN_TOP - DEFAULT_MARGIN_BOTTOM - (somethingSelected ? DEFAULT_SELECTED_SPACING : 0)) / $items.length,
@@ -38,8 +38,6 @@ function setSelected(el) {
 $(document).ready(function() {
 	var $items = $('.item');
 	
-	setPosition();
-	
 	$items.mouseover(function() {
 		$(this).addClass('hover');
 	});
@@ -48,12 +46,24 @@ $(document).ready(function() {
 		$(this).removeClass('hover');
 	});
 	
+	// On click revert to non selected state
 	$(document).click(function() {
 		setSelected();
 	});
 	
+	// On click focus item
 	$items.click(function() {
 		setSelected(this);
 		return false;
 	});
+	
+	$(window).resize(function() {
+		var previousTransition = $items.css('-webkit-transition');
+		$items.css({ '-webkit-transition': 'none' });
+		setPosition(true);
+		$items.css({ '-webkit-transition': previousTransition });
+	});
+	
+	// Set initial position
+	setPosition();
 });
